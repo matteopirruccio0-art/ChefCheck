@@ -3,533 +3,645 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ChefCheck - Fotografi il DDT, il magazzino si aggiorna da solo. Gestione magazzino e HACCP per ristoranti italiani.">
-    <title>ChefCheck - Gestione Magazzino per Ristoranti</title>
-    
+    <meta name="description" content="ChefCheck — Fotografi il DDT, il magazzino si aggiorna da solo. OCR DDT, etichette HACCP, magazzino automatico per cuochi italiani.">
+    <title>ChefCheck — Il sistema operativo per la tua cucina</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --bg-primary: #FFFFFF;
-            --bg-secondary: #F8F9FA;
-            --accent-green: #2E7D32;
-            --accent-orange: #E85D04;
-            --text-primary: #1A1A2E;
-            --text-secondary: rgba(26, 26, 46, 0.7);
-            --card-bg: #FFFFFF;
-            --card-border: rgba(46, 125, 50, 0.2);
-            --success: #2E7D32;
+            --bg: #0F1117;
+            --bg2: #1A1D2E;
+            --bg3: #22263A;
+            --green: #16A34A;
+            --orange: #D97706;
+            --text: #F8F8F8;
+            --muted: rgba(248,248,248,0.55);
+            --border: rgba(255,255,255,0.08);
+            --radius: 16px;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
-        
-        h1, h2, h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            line-height: 1.2;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        h1,h2,h3 { font-family: 'Poppins', sans-serif; line-height: 1.15; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(15,17,23,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
             padding: 0 24px;
         }
-        
-        /* Header */
-        header {
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            background: rgba(26, 26, 46, 0.9);
-            backdrop-filter: blur(10px);
+        .nav-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
         }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
+        .logo-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            text-decoration: none;
+            font-size: 1.4rem; font-weight: 800;
+            text-decoration: none; color: var(--text);
         }
-        
-        .logo span {
-            color: var(--accent);
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
-        
+        .logo-text .chef { color: var(--green); }
+        .logo-text .check { color: var(--orange); }
+        .nav-links { display: flex; gap: 28px; list-style: none; }
         .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
+            color: var(--muted); text-decoration: none;
+            font-size: 0.9rem; font-weight: 500;
+            transition: color .2s;
         }
-        
-        .nav-links a:hover {
-            color: var(--text-primary);
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--green);
+            color: #fff !important;
+            padding: 8px 20px;
+            border-radius: 8px;
+            font-weight: 600 !important;
         }
-        
-        /* Hero */
+        .nav-cta:hover { background: #15803d !important; color: #fff !important; }
+
+        /* HERO */
         .hero {
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             text-align: center;
             padding: 120px 24px 80px;
             position: relative;
+            overflow: hidden;
         }
-        
         .hero::before {
             content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: absolute; top: 30%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(233, 69, 96, 0.15) 0%, transparent 70%);
+            width: 700px; height: 500px;
+            background: radial-gradient(ellipse, rgba(22,163,74,0.12) 0%, transparent 70%);
             pointer-events: none;
         }
-        
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
+        .hero::after {
+            content: '';
+            position: absolute; bottom: 10%; right: 15%;
+            width: 400px; height: 300px;
+            background: radial-gradient(ellipse, rgba(217,119,6,0.08) 0%, transparent 70%);
+            pointer-events: none;
         }
-        
+        .hero-inner { position: relative; z-index: 1; max-width: 760px; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(22,163,74,0.12);
+            border: 1px solid rgba(22,163,74,0.3);
+            color: #4ade80;
+            font-size: 0.8rem; font-weight: 600;
+            padding: 6px 16px; border-radius: 20px;
+            margin-bottom: 28px; letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            margin-bottom: 24px;
+            font-size: clamp(2.4rem, 6vw, 3.8rem);
+            font-weight: 800;
+            margin-bottom: 20px;
         }
-        
-        .hero .tagline {
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
-            color: var(--text-secondary);
-            margin-bottom: 40px;
+        .hero h1 em {
+            font-style: normal;
+            color: var(--green);
         }
-        
-        .cta-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: var(--accent);
-            color: var(--text-primary);
-            padding: 16px 32px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: none;
-            cursor: pointer;
+        .hero .sub {
+            font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+            color: var(--muted);
+            margin-bottom: 44px;
+            max-width: 580px; margin-left: auto; margin-right: auto;
         }
-        
-        .cta-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.25);
+        .btn-row {
+            display: flex; gap: 14px;
+            justify-content: center; flex-wrap: wrap;
+            margin-bottom: 56px;
         }
-        
-        .cta-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background-color: transparent;
-            color: var(--text-primary);
-            padding: 16px 32px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid var(--card-border);
-            transition: border-color 0.3s, background-color 0.3s;
-            cursor: pointer;
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--green);
+            color: #fff; text-decoration: none;
+            padding: 15px 30px; border-radius: 12px;
+            font-weight: 700; font-size: 1rem;
+            transition: background .2s, transform .15s;
         }
-        
-        .cta-secondary:hover {
-            border-color: var(--accent-green);
-            background-color: rgba(46, 125, 50, 0.05);
+        .btn-primary:hover { background: #15803d; transform: translateY(-2px); }
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: transparent;
+            color: var(--text); text-decoration: none;
+            padding: 15px 30px; border-radius: 12px;
+            font-weight: 600; font-size: 1rem;
+            border: 1px solid var(--border);
+            transition: border-color .2s, background .2s;
         }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
+        .btn-ghost:hover { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+        .hero-stats {
+            display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
         }
-        
-        /* Features */
-        .features {
-            padding: 100px 0;
+        .stat { text-align: center; }
+        .stat-num {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem; font-weight: 700;
+            color: var(--text);
         }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 64px;
+        .stat-num span { color: var(--green); }
+        .stat-label { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+        /* SECTION WRAPPER */
+        section { padding: 100px 24px; }
+        .inner { max-width: 1100px; margin: 0 auto; }
+        .sec-title {
+            text-align: center; margin-bottom: 64px;
         }
-        
-        .section-header h2 {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            margin-bottom: 16px;
+        .sec-title h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 12px; }
+        .sec-title p { color: var(--muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+        /* PROBLEM */
+        .problem { background: var(--bg2); }
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
-        
-        .section-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+        .problem-card {
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px 24px;
         }
-        
-        .features-grid {
+        .problem-card .icon {
+            font-size: 1.6rem; margin-bottom: 14px;
+        }
+        .problem-card h3 {
+            font-size: 1rem; font-weight: 600; margin-bottom: 8px;
+            color: var(--text);
+        }
+        .problem-card p { font-size: 0.9rem; color: var(--muted); }
+        .time-tag {
+            display: inline-block;
+            background: rgba(217,119,6,0.15);
+            color: #fbbf24;
+            font-size: 0.78rem; font-weight: 700;
+            padding: 3px 10px; border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        /* HOW IT WORKS */
+        .steps {
+            display: flex; flex-direction: column; gap: 0;
+            max-width: 700px; margin: 0 auto;
+        }
+        .step {
+            display: flex; gap: 24px;
+            position: relative; padding-bottom: 40px;
+        }
+        .step:last-child { padding-bottom: 0; }
+        .step-line {
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .step-num {
+            width: 44px; height: 44px; border-radius: 50%;
+            background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700; font-size: 1rem;
+            flex-shrink: 0; color: #fff;
+        }
+        .step-connector {
+            width: 2px; flex: 1; margin-top: 8px;
+            background: linear-gradient(to bottom, var(--green), transparent);
+            min-height: 30px;
+        }
+        .step:last-child .step-connector { display: none; }
+        .step-body { padding-top: 10px; }
+        .step-body h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .step-body p { color: var(--muted); font-size: 0.95rem; }
+        .step-tag {
+            display: inline-block;
+            background: rgba(22,163,74,0.12);
+            color: #4ade80;
+            font-size: 0.78rem; font-weight: 600;
+            padding: 3px 10px; border-radius: 6px;
+            margin-top: 8px;
+        }
+
+        /* FEATURES */
+        .features { background: var(--bg2); }
+        .feat-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
+            gap: 24px;
         }
-        
-        .feature-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 40px 32px;
-            transition: transform 0.3s, border-color 0.3s;
+        .feat-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
+            transition: border-color .2s, transform .2s;
         }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-green);
+        .feat-card:hover {
+            border-color: rgba(22,163,74,0.3);
+            transform: translateY(-4px);
         }
-        
-        .feature-icon {
-            width: 64px;
-            height: 64px;
-            background-color: rgba(232, 93, 4, 0.15);
-            color: var(--accent-orange);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 1.8rem;
+        .feat-icon {
+            width: 52px; height: 52px;
+            background: rgba(22,163,74,0.1);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; margin-bottom: 20px;
         }
-        
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-        }
-        
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-        
-        /* Pricing */
-        .pricing {
-            padding: 100px 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(233, 69, 96, 0.03) 50%, transparent 100%);
-        }
-        
+        .feat-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+        .feat-card p { color: var(--muted); font-size: 0.92rem; }
+
+        /* PRICING */
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            max-width: 800px;
-            margin: 0 auto;
+            gap: 24px; max-width: 740px; margin: 0 auto;
         }
-        
-        .pricing-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 40px 32px;
+        .plan {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 28px;
             position: relative;
         }
-        
-        .pricing-card.featured {
-            border-color: var(--accent-green);
-            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, var(--card-bg) 100%);
+        .plan.featured {
+            border-color: var(--green);
+            background: linear-gradient(160deg, rgba(22,163,74,0.07) 0%, var(--bg2) 60%);
         }
-        
-        .badge {
-            position: absolute;
-            top: -12px;
-            right: 24px;
-            background-color: var(--accent-orange);
-            color: var(--bg-primary);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
+        .plan-badge {
+            position: absolute; top: -13px; left: 28px;
+            background: var(--green);
+            color: #fff;
+            font-size: 0.75rem; font-weight: 700;
+            padding: 5px 14px; border-radius: 10px;
+            letter-spacing: 0.3px;
         }
-        
-        .pricing-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+        .plan-name { font-size: 0.85rem; font-weight: 600; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+        .plan-price {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem; font-weight: 800;
+            margin: 12px 0 4px;
+            color: var(--text);
         }
-        
-        .price {
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 24px 0;
+        .plan-price sub { font-size: 1rem; font-weight: 400; color: var(--muted); }
+        .plan-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 28px; }
+        .plan-feats { list-style: none; margin-bottom: 32px; }
+        .plan-feats li {
+            display: flex; align-items: flex-start; gap: 10px;
+            font-size: 0.9rem; color: var(--muted);
+            margin-bottom: 10px;
         }
-        
-        .price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--text-secondary);
-        }
-        
-        .features-list {
-            list-style: none;
-            margin-bottom: 32px;
-        }
-        
-        .features-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            color: var(--text-secondary);
-        }
-        
-        .features-list li::before {
+        .plan-feats li::before {
             content: '✓';
-            color: var(--success);
-            font-weight: 600;
+            color: var(--green);
+            font-weight: 700; flex-shrink: 0;
+            margin-top: 1px;
         }
-        
-        .pricing-card .cta-primary,
-        .pricing-card .cta-secondary {
-            width: 100%;
-            justify-content: center;
+        .plan-feats li.limited { color: rgba(248,248,248,0.3); }
+        .plan-feats li.limited::before { color: rgba(248,248,248,0.2); }
+        .btn-plan-primary {
+            display: block; text-align: center; text-decoration: none;
+            background: var(--green); color: #fff;
+            padding: 14px; border-radius: 10px;
+            font-weight: 700; font-size: 0.95rem;
+            transition: background .2s;
         }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 100px 24px;
+        .btn-plan-primary:hover { background: #15803d; }
+        .btn-plan-ghost {
+            display: block; text-align: center; text-decoration: none;
+            background: transparent; color: var(--text);
+            padding: 14px; border-radius: 10px;
+            font-weight: 600; font-size: 0.95rem;
+            border: 1px solid var(--border);
+            transition: border-color .2s;
+        }
+        .btn-plan-ghost:hover { border-color: rgba(255,255,255,0.25); }
+
+        /* BETA CTA */
+        .beta { background: var(--bg2); }
+        .beta-box {
+            max-width: 640px; margin: 0 auto;
+            background: linear-gradient(135deg, rgba(22,163,74,0.08) 0%, rgba(217,119,6,0.05) 100%);
+            border: 1px solid rgba(22,163,74,0.2);
+            border-radius: 24px;
+            padding: 60px 40px;
             text-align: center;
         }
-        
-        .cta-box {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 64px 40px;
+        .beta-box h2 { font-size: clamp(1.7rem, 4vw, 2.2rem); margin-bottom: 16px; }
+        .beta-box p { color: var(--muted); font-size: 1rem; margin-bottom: 36px; max-width: 460px; margin-left: auto; margin-right: auto; }
+        .beta-note { font-size: 0.82rem; color: var(--muted); margin-top: 16px; }
+
+        /* FOUNDER */
+        .founder-box {
+            max-width: 680px; margin: 0 auto;
+            display: flex; gap: 28px; align-items: flex-start;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 32px;
         }
-        
-        .cta-box h2 {
-            font-size: clamp(1.8rem, 4vw, 2.2rem);
-            margin-bottom: 16px;
+        .founder-avatar {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--green), var(--orange));
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3rem; font-weight: 700;
+            color: #fff; flex-shrink: 0;
         }
-        
-        .cta-box p {
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-            font-size: 1.1rem;
+        .founder-box blockquote {
+            font-size: 1.02rem; color: var(--muted);
+            font-style: italic; line-height: 1.7;
+            border: none; padding: 0; margin: 0;
         }
-        
-        /* Footer */
+        .founder-box cite {
+            display: block; margin-top: 14px;
+            font-style: normal; font-size: 0.88rem;
+            color: var(--text); font-weight: 600;
+        }
+        .founder-box cite span { color: var(--muted); font-weight: 400; }
+
+        /* FOOTER */
         footer {
-            padding: 48px 24px;
-            border-top: 1px solid var(--card-border);
+            padding: 40px 24px;
+            border-top: 1px solid var(--border);
         }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 24px;
+        .footer-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 16px;
         }
-        
-        .footer-content .logo {
-            font-size: 1.2rem;
-        }
-        
-        .footer-content p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .footer-content a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-content a:hover {
-            color: var(--accent);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .cta-primary,
-            .cta-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .features-grid,
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
+        footer a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color .2s; }
+        footer a:hover { color: var(--text); }
+        footer p { color: var(--muted); font-size: 0.88rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 680px) {
+            .nav-links { display: none; }
+            .founder-box { flex-direction: column; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            section { padding: 72px 20px; }
+            .beta-box { padding: 44px 24px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">Chef<span>Check</span></a>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#pricing">Prezzi</a></li>
-                <li><a href="#beta">Beta</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Gestione magazzino per cuochi italiani</h1>
-            <p class="tagline">Fotografi il DDT, il magazzino si aggiorna da solo</p>
-            <div class="hero-buttons">
-                <a href="#beta" class="cta-primary">
-                    Candidati per la Beta gratuita
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-                <a href="#features" class="cta-secondary">Scopri come funziona</a>
-            </div>
-        </div>
-    </section>
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="#" class="logo-text"><span class="chef">Chef</span><span class="check">Check</span></a>
+        <ul class="nav-links">
+            <li><a href="#come-funziona">Come funziona</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#prezzi">Prezzi</a></li>
+            <li><a href="#beta" class="nav-cta">Beta gratuita</a></li>
+        </ul>
+    </div>
+</nav>
 
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <h2>Tutto quello che serve in cucina</h2>
-                <p>Tecnologia pensata per semplificare il lavoro quotidiano del ristoratore</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">📸</div>
-                    <h3>OCR DDT Automatico</h3>
-                    <p>Fotografa il documento di trasporto e l'intelligenza artificiale estrae automaticamente prodotti, quantità e prezzi. Zero input manuale.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏷️</div>
-                    <h3>Etichette HACCP in 10 secondi</h3>
-                    <p>Genera e stampa etichette HACCP conformi in pochi tap. Tracciabilità garantita senza perdita di tempo.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3>Magazzino Sempre Aggiornato</h3>
-                    <p>Il sistema calcola automaticamente le giacenze, alerta su scadenze e suggerisce riordini. Sai sempre cosa hai in cucina.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <h2>Scegli il tuo piano</h2>
-                <p>Inizia gratis, scala quando cresci</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Free</h3>
-                    <p style="color: var(--text-secondary);">Per piccoli ristoranti</p>
-                    <div class="price">€0<span>/mese</span></div>
-                    <ul class="features-list">
-                        <li>10 scan DDT al mese</li>
-                        <li>Magazzino base</li>
-                        <li>Supporto email</li>
-                    </ul>
-                    <a href="#beta" class="cta-secondary">Inizia Gratis</a>
-                </div>
-                <div class="pricing-card featured">
-                    <span class="badge">Consigliato</span>
-                    <h3>Pro</h3>
-                    <p style="color: var(--text-secondary);">Per ristoranti attivi</p>
-                    <div class="price">€9.90<span>/mese</span></div>
-                    <ul class="features-list">
-                        <li>Scan DDT illimitati</li>
-                        <li>Etichette HACCP incluse</li>
-                        <li>Gestione ordini fornitori</li>
-                        <li>Supporto prioritario</li>
-                    </ul>
-                    <a href="#beta" class="cta-primary">
-                        Passa a Pro
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="cta-section" id="beta">
-        <div class="cta-box">
-            <h2>Unisciti alla Beta gratuita</h2>
-            <p>Sii tra i primi a provare ChefCheck. Accesso gratuito a tutte le funzionalità Pro durante il periodo beta.</p>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOq9lV2mftKeCeZwCNUqVtb6JoM_w8ghMYdUUuCIOI5PXHNg/viewform?usp=header" target="_blank" class="cta-primary">
-                Candidati ora
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
-                </svg>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-badge">Beta aperta — posti limitati</div>
+        <h1>Fotografi il DDT.<br>Il magazzino si aggiorna <em>da solo.</em></h1>
+        <p class="sub">ChefCheck elimina il data entry dalla cucina italiana. OCR sui DDT dei tuoi fornitori, etichette HACCP in 10 secondi, magazzino sempre aggiornato.</p>
+        <div class="btn-row">
+            <a href="#beta" class="btn-primary">
+                Candidati per la Beta
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
+            <a href="#come-funziona" class="btn-ghost">Scopri come funziona</a>
         </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <a href="#" class="logo">Chef<span>Check</span></a>
-                <p>Contatti: <a href="mailto:chefcheck.app@gmail.com">chefcheck.app@gmail.com</a></p>
-                <p>&copy; 2026 ChefCheck. Tutti i diritti riservati.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-num">1–3<span>h</span></div>
+                <div class="stat-label">risparmiate ogni giorno</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">30<span>s</span></div>
+                <div class="stat-label">per processare un DDT</div>
+            </div>
+            <div class="stat">
+                <div class="stat-num">10<span>s</span></div>
+                <div class="stat-label">per un'etichetta HACCP</div>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problem">
+    <div class="inner">
+        <div class="sec-title">
+            <h2>Ogni giorno, la stessa storia</h2>
+            <p>Attività che rubano tempo prezioso ai fornelli, ogni singolo giorno.</p>
+        </div>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="icon">📄</div>
+                <h3>DDT registrati a mano</h3>
+                <p>Ogni mattina arrivi i documenti del fornitore. Ogni mattina qualcuno li trascrive a mano nella scheda HACCP.</p>
+                <div class="time-tag">30–45 min/giorno</div>
+            </div>
+            <div class="problem-card">
+                <div class="icon">🏷️</div>
+                <h3>Etichette HACCP scritte a penna</h3>
+                <p>Cerchi il lotto, cerchi la scadenza, scrivi l'etichetta. Per ogni preparazione. Ogni giorno.</p>
+                <div class="time-tag">5–10 min per etichetta</div>
+            </div>
+            <div class="problem-card">
+                <div class="icon">📦</div>
+                <h3>Magazzino stimato a memoria</h3>
+                <p>Il giro di cella e frigo prima di ogni ordine. La lista mentale. Il rischio di dimenticare qualcosa durante il servizio.</p>
+                <div class="time-tag">30–60 min ogni 2–3 giorni</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<section id="come-funziona">
+    <div class="inner">
+        <div class="sec-title">
+            <h2>Come funziona</h2>
+            <p>Una foto. L'AI fa il resto.</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-num">1</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Fotografi il DDT del fornitore</h3>
+                    <p>MARR, Metro, Sysco, Brakes — qualsiasi formato. L'app riconosce automaticamente i documenti italiani.</p>
+                    <div class="step-tag">Zero setup aggiuntivo</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-num">2</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h3>L'AI estrae tutto automaticamente</h3>
+                    <p>Ingredienti, quantità, prezzi, lotti e date di scadenza vengono riconosciuti e salvati in pochi secondi.</p>
+                    <div class="step-tag">30 secondi per DDT</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-num">3</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Magazzino aggiornato, etichette pronte</h3>
+                    <p>Le scorte si aggiornano da sole. Le etichette HACCP le stampi con un tap. La scheda materie prime è già compilata.</p>
+                    <div class="step-tag">Zero data entry</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-line">
+                    <div class="step-num">4</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-body">
+                    <h3>Gli ordini si generano da soli</h3>
+                    <p>Dopo 2–3 settimane l'app impara i tuoi consumi. La lista ordini è già pronta prima che tu la chieda. Un tap manda l'ordine via WhatsApp al fornitore.</p>
+                    <div class="step-tag">2 minuti per riordinare</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+    <div class="inner">
+        <div class="sec-title">
+            <h2>Tutto quello che serve in cucina</h2>
+            <p>Niente di più, niente di meno.</p>
+        </div>
+        <div class="feat-grid">
+            <div class="feat-card">
+                <div class="feat-icon">📸</div>
+                <h3>OCR DDT Automatico</h3>
+                <p>Addestrato sui formati DDT italiani. Riconosce MARR, Metro, Sysco, Brakes e tutti i principali distributori HoReCa.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🏷️</div>
+                <h3>Etichette HACCP in 10 secondi</h3>
+                <p>Lotto e scadenza vengono dal DDT già caricato. Stampi con un tap. Nessuna ricerca manuale.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">📦</div>
+                <h3>Magazzino sempre aggiornato</h3>
+                <p>Le giacenze si aggiornano automaticamente ad ogni DDT. Sai sempre cosa hai in cucina senza fare il giro di cella.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🔔</div>
+                <h3>Alert scadenze e scorte</h3>
+                <p>Ti avvisa quando un prodotto sta per scadere o quando le scorte scendono sotto soglia. Zero sprechi, zero sorprese.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">📋</div>
+                <h3>Ordini automatici ai fornitori</h3>
+                <p>Dopo 2–3 settimane la lista ordini si genera da sola. Un tap manda il messaggio WhatsApp al fornitore.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🇮🇹</div>
+                <h3>Fatto per la cucina italiana</h3>
+                <p>Lingua italiana, DDT italiani, fornitori italiani. Non un prodotto anglofono adattato — nato qui.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section id="prezzi">
+    <div class="inner">
+        <div class="sec-title">
+            <h2>Semplice e trasparente</h2>
+            <p>Inizia gratis. Passa a Pro solo quando vuoi.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="plan">
+                <div class="plan-name">Free</div>
+                <div class="plan-price">€0 <sub>/mese</sub></div>
+                <div class="plan-desc">Per provare senza impegno. Per sempre.</div>
+                <ul class="plan-feats">
+                    <li>10 scan DDT al mese</li>
+                    <li>Magazzino base</li>
+                    <li>Supporto email</li>
+                    <li class="limited">Etichette HACCP</li>
+                    <li class="limited">Ordini automatici</li>
+                </ul>
+                <a href="#beta" class="btn-plan-ghost">Inizia gratis</a>
+            </div>
+            <div class="plan featured">
+                <div class="plan-badge">Consigliato</div>
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">€9<sub>.90/mese</sub></div>
+                <div class="plan-desc">Per chi lavora ogni giorno. Meno di un caffè al giorno.</div>
+                <ul class="plan-feats">
+                    <li>Scan DDT illimitati</li>
+                    <li>Etichette HACCP incluse</li>
+                    <li>Ordini automatici fornitori</li>
+                    <li>Calibrazione settimanale automatica</li>
+                    <li>Supporto prioritario</li>
+                </ul>
+                <a href="#beta" class="btn-plan-primary">Prova gratis 30 giorni</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOUNDER -->
+<section>
+    <div class="inner">
+        <div class="founder-box">
+            <div class="founder-avatar">MP</div>
+            <div>
+                <blockquote>
+                    "Ho costruito ChefCheck perché il problema lo vivevo ogni giorno in cucina. Ogni mattina i DDT da registrare, le etichette da scrivere a mano, il magazzino da tenere a mente. Nessun software esistente risolveva questo per un cuoco italiano. Quindi l'ho fatto io."
+                    <cite>Matteo Pirruccio <span>— Chef con 20 anni di esperienza HoReCa, fondatore di ChefCheck</span></cite>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BETA -->
+<section class="beta" id="beta">
+    <div class="inner">
+        <div class="beta-box">
+            <h2>Unisciti alla Beta gratuita</h2>
+            <p>Stiamo cercando i primi 20 cuochi italiani che vogliono testare ChefCheck. Accesso completo al piano Pro durante tutto il periodo beta — senza pagare nulla.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdOq9lV2mftKeCeZwCNUqVtb6JoM_w8ghMYdUUuCIOI5PXHNg/viewform?usp=header" target="_blank" class="btn-primary" style="display:inline-flex; font-size:1.05rem; padding: 16px 36px;">
+                Candidati ora — è gratis
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+            </a>
+            <p class="beta-note">Nessuna carta di credito. Nessun impegno. Solo una videochiamata di 15 minuti con Matteo.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-inner">
+        <a href="#" class="logo-text" style="font-size:1.1rem;"><span class="chef">Chef</span><span class="check">Check</span></a>
+        <p>Contatti: <a href="mailto:chefcheck.app@gmail.com">chefcheck.app@gmail.com</a></p>
+        <p style="color:var(--muted); font-size:0.85rem;">© 2026 ChefCheck. Tutti i diritti riservati.</p>
+    </div>
+</footer>
+
 </body>
 </html>
