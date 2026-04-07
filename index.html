@@ -12,13 +12,15 @@
     
     <style>
         :root {
-            --bg-primary: #1A1A2E;
-            --accent: #E94560;
-            --text-primary: #FFFFFF;
-            --text-secondary: rgba(255, 255, 255, 0.7);
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --success: #4ADE80;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --accent-green: #2E7D32;
+            --accent-orange: #E85D04;
+            --text-primary: #1A1A2E;
+            --text-secondary: rgba(26, 26, 46, 0.7);
+            --card-bg: #FFFFFF;
+            --card-border: rgba(46, 125, 50, 0.2);
+            --success: #2E7D32;
         }
         
         * {
@@ -151,7 +153,7 @@
         
         .cta-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+            box-shadow: 0 10px 30px rgba(46, 125, 50, 0.25);
         }
         
         .cta-secondary {
@@ -171,8 +173,8 @@
         }
         
         .cta-secondary:hover {
-            border-color: var(--accent);
-            background-color: rgba(233, 69, 96, 0.1);
+            border-color: var(--accent-green);
+            background-color: rgba(46, 125, 50, 0.05);
         }
         
         .hero-buttons {
@@ -218,13 +220,14 @@
         
         .feature-card:hover {
             transform: translateY(-8px);
-            border-color: var(--accent);
+            border-color: var(--accent-green);
         }
         
         .feature-icon {
             width: 64px;
             height: 64px;
-            background: rgba(233, 69, 96, 0.1);
+            background-color: rgba(232, 93, 4, 0.15);
+            color: var(--accent-orange);
             border-radius: 16px;
             display: flex;
             align-items: center;
@@ -266,16 +269,16 @@
         }
         
         .pricing-card.featured {
-            border-color: var(--accent);
-            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, var(--card-bg) 100%);
+            border-color: var(--accent-green);
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1) 0%, var(--card-bg) 100%);
         }
         
         .badge {
             position: absolute;
             top: -12px;
             right: 24px;
-            background-color: var(--accent);
-            color: var(--text-primary);
+            background-color: var(--accent-orange);
+            color: var(--bg-primary);
             padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
